@@ -73,12 +73,15 @@ if [ -d "$OUTPUT_DIR" ]; then
     echo "[WARN] Output directory $OUTPUT_DIR already exists. Remove it to re-run."
     echo "       To re-run: rm -rf $OUTPUT_DIR && bash picrust2_install_run.sh"
 else
-    echo "[INFO] Running PICRUSt2 pipeline (this takes ~30-90 min) ..."
+    echo "[INFO] Running PICRUSt2 pipeline (this takes ~60-90 min) ..."
+    # --chunk_size 500: EPA-ng v0.3.8 silently fails with the default 5000
+    # when the reference MSA is large (45 MB); 500 is safe and ~40 min for 7631 ASVs
     picrust2_pipeline.py \
         --study_fasta  "$INPUT_DIR/dna-sequences.fasta" \
         --input        "$INPUT_DIR/feature-table.biom" \
         --output       "$OUTPUT_DIR" \
         --stratified \
+        --chunk_size   500 \
         --processes    "$THREADS" \
         2>&1 | tee picrust2_run.log
     echo "[INFO] Pipeline complete. Outputs in $OUTPUT_DIR/"
