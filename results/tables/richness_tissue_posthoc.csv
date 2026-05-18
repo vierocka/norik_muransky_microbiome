@@ -1,0 +1,29 @@
+"tissue1","tissue2","p_adj"
+"Forehead","Dorsum",0.00264289113601457
+"Left front pastern","Dorsum",0.00179850157653245
+"Left front pastern","Forehead",0.324284565816447
+"Muzzle","Dorsum",0.000545540297606895
+"Muzzle","Forehead",0.066527843853748
+"Muzzle","Left front pastern",0.0403395674825574
+"Neck","Dorsum",0.00161336780570576
+"Neck","Forehead",0.253689599450818
+"Neck","Left front pastern",0.0736960295372467
+"Neck","Muzzle",0.889084660370615
+"Pectoral area","Dorsum",0.00121801246157638
+"Pectoral area","Forehead",0.171558052180525
+"Pectoral area","Left front pastern",0.0840768686960904
+"Pectoral area","Muzzle",0.976818618436511
+"Pectoral area","Neck",0.976818618436511
+"Udder","Dorsum",0.0238675112792084
+"Udder","Forehead",0.0973821644980506
+"Udder","Left front pastern",0.0744550611633216
+"Udder","Muzzle",0.324284565816447
+"Udder","Neck",0.413043017842834
+"Udder","Pectoral area",0.413043017842834
+"Ventral abdomen","Dorsum",0.000545540297606895
+"Ventral abdomen","Forehead",0.976818618436511
+"Ventral abdomen","Left front pastern",0.324284565816447
+"Ventral abdomen","Muzzle",0.0736960295372467
+"Ventral abdomen","Neck",0.324284565816447
+"Ventral abdomen","Pectoral area",0.215277698038494
+"Ventral abdomen","Udder",0.0792539467984301

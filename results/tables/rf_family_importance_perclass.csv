@@ -1,4 +1,4 @@
-"family","A_ground_contact","B_near_ground","C_elevated","MeanDecreaseAccuracy","MeanDecreaseGini","source"
+"family","GCtS_A","GCtS_B","EtS","MeanDecreaseAccuracy","MeanDecreaseGini","source"
 "Deinococcaceae",0.128104184704185,0.0479568671524554,0.172665692905493,0.128610903639192,9.62061060430068,"env-shared"
 "Intrasporangiaceae",0.113353951603952,0.00868265623265623,0.0497553285496455,0.0541648324446403,5.8643565836725,"animal-only"
 "Dietziaceae",0.0553725357975358,0.0123666888666889,0.0183971683065218,0.025872926906364,3.00491736230172,"animal-only"
