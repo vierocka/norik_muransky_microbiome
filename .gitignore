@@ -1,0 +1,120 @@
+# Raw reads — too large for git (submit to NCBI SRA)
+demux-paired.qza
+*.fastq.gz
+*.fastq
+*.fq.gz
+
+# QIIME2 visualisations — regenerate from .qza with qiime tools view
+*.qzv
+
+# PICRUSt2 run outputs — regenerate with picrust2_install_run.sh
+picrust2_output/
+picrust2_input/
+picrust2_run.log
+
+# Temporary / intermediate files
+/tmp/
+*.tmp
+*.bak
+__pycache__/
+
+# R session files
+.Rdata
+.Rhistory
+*.Rproj.user/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Root-level working copies (canonical versions are in scripts/)
+/richness_age_glm.R
+/anova_richness_topology.R
+/anova_richness_no_age.R
+/wilcoxon_young_old.R
+/family_abundance_tests.R
+/family_abundance_figure.R
+/rf_topology_predictors.R
+/rf_validation.R
+/rf_diagnostics.R
+/roc_smoothed.R
+/analysis_ACgroups.R
+/picrust2_install_run.sh
+/picrust2_analysis.R
+/diagnostic_probe_set.md
+
+# Exploratory / development scripts (not part of the main analysis pipeline)
+/age_group_extended.R
+/clustering_age_groups.R
+/correlation_age.R
+/dominant_families.R
+/pca_family.R
+/plot_overview.R
+/qiime2_family_comparison.R
+/ramses.sh
+/redo_filter_qiime3_outputs.sh
+
+# Root-level figures and tables (canonical versions in results/)
+/*.pdf
+/*.png
+
+# Root-level intermediate CSVs (canonical in results/tables/ or data/)
+/age3_kruskal.csv
+/age3_site_kruskal.csv
+/age_correlation_results.csv
+/age_group_family_abundance.csv
+/age_group_wilcoxon.csv
+/age_richness_per_tissue.csv
+/age_spearman_pca.csv
+/dominant_families_stats.csv
+/family_comparison_qiime2_kraken2.csv
+/pca_scores.csv
+/pca_variance_summary.csv
+/per_horse_medians.csv
+/per-sample-fastq-counts.tsv
+/forward-seven-number-summaries.tsv
+/reverse-seven-number-summaries.tsv
+/richness_per_horse_tissue.csv
+/richness_tissue_posthoc.csv
+/richness_age_glm_results.csv
+/qiime2_family_stats.csv
+/metadata_kraken.csv
+/anova1_topology_age.csv
+/anova2_topo3_age.csv
+/famabund_posthoc_topo4.csv
+/famabund_posthoc_topology8.csv
+/famabund_kw_age3.csv
+/famabund_kw_topo4.csv
+/famabund_kw_topology8.csv
+/famabund_wilcoxon_age2.csv
+/famabund_spearman_age.csv
+/famabund_summary_all_tests.csv
+/famabund_wilcoxon_ACvsC_onlyACgroups.csv
+/rf_family_importance.csv
+/rf_family_importance_perclass.csv
+/rf_importance_onlyACgroups.csv
+/rf_roc_auc.csv
+/rf_roc_youden_metrics.csv
+/roc_metrics_onlyACgroups.csv
+/richness_ACgroups_onlyACgroups.csv
+/top8_kraken2_overlap.csv
+/top8_overdispersion.csv
+/anova1_richness_by_topology_summary.csv
+/anova1_topology_noage.csv
+/anova2_topo3_noage.csv
+/per_horse_medians.csv
+
+# Root-level misc
+/notes.txt
+/*.log
+/*.txt
+
+# Root-level QIIME2 artefacts not needed for reproduction
+/denoising-stats.qza
+/family_table.qza
+/genus_table.qza
+/genus_export/
+/taxonomy_export/
+/family_table.tsv
+/metadata.csv
+/pca_family_contributions.csv

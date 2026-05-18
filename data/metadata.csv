@@ -1,0 +1,98 @@
+sample_id,topology,sex,age
+1,Environment,0,0
+10-1,Forehead,female,14
+10-2,Muzzle,female,14
+10-3,Neck,female,14
+10-4,Pectoral area,female,14
+10-5,Dorsum,female,14
+10-6,Ventral abdomen,female,14
+10-7,Udder,female,14
+10-8,Left front pastern,female,14
+11-1,Forehead,female,8
+11-2,Muzzle,female,8
+11-3,Neck,female,8
+11-4,Pectoral area,female,8
+11-5,Dorsum,female,8
+11-6,Ventral abdomen,female,8
+11-7,Udder,female,8
+11-8,Left front pastern,female,8
+12-1,Forehead,female,10
+12-2,Muzzle,female,10
+12-3,Neck,female,10
+12-4,Pectoral area,female,10
+12-5,Dorsum,female,10
+12-6,Ventral abdomen,female,10
+12-7,Udder,female,10
+12-8,Left front pastern,female,10
+13-1,Forehead,female,8
+13-2,Muzzle,female,8
+13-3,Neck,female,8
+13-4,Pectoral area,female,8
+13-5,Dorsum,female,8
+13-6,Ventral abdomen,female,8
+13-7,Udder,female,8
+13-8,Left front pastern,female,8
+2-1,Forehead,female,10
+2-2,Muzzle,female,10
+2-3,Neck,female,10
+2-4,Pectoral area,female,10
+2-5,Dorsum,female,10
+2-6,Ventral abdomen,female,10
+2-7,Udder,female,10
+2-8,Left front pastern,female,10
+3-1,Forehead,female,6
+3-2,Muzzle,female,6
+3-3,Neck,female,6
+3-4,Pectoral area,female,6
+3-5,Dorsum,female,6
+3-6,Ventral abdomen,female,6
+3-7,Udder,female,6
+3-8,Left front pastern,female,6
+4-1,Forehead,female,7
+4-2,Muzzle,female,7
+4-3,Neck,female,7
+4-4,Pectoral area,female,7
+4-5,Dorsum,female,7
+4-6,Ventral abdomen,female,7
+4-7,Udder,female,7
+4-8,Left front pastern,female,7
+5-1,Forehead,female,5
+5-2,Muzzle,female,5
+5-3,Neck,female,5
+5-4,Pectoral area,female,5
+5-5,Dorsum,female,5
+5-6,Ventral abdomen,female,5
+5-7,Udder,female,5
+5-8,Left front pastern,female,5
+6-1,Forehead,female,15
+6-2,Muzzle,female,15
+6-3,Neck,female,15
+6-4,Pectoral area,female,15
+6-5,Dorsum,female,15
+6-6,Ventral abdomen,female,15
+6-7,Udder,female,15
+6-8,Left front pastern,female,15
+7-1,Forehead,female,15
+7-2,Muzzle,female,15
+7-3,Neck,female,15
+7-4,Pectoral area,female,15
+7-5,Dorsum,female,15
+7-6,Ventral abdomen,female,15
+7-7,Udder,female,15
+7-8,Left front pastern,female,15
+8-1,Forehead,female,10
+8-2,Muzzle,female,10
+8-3,Neck,female,10
+8-4,Pectoral area,female,10
+8-5,Dorsum,female,10
+8-6,Ventral abdomen,female,10
+8-7,Udder,female,10
+8-8,Left front pastern,female,10
+9-1,Forehead,female,7
+9-2,Muzzle,female,7
+9-3,Neck,female,7
+9-4,Pectoral area,female,7
+9-5,Dorsum,female,7
+9-6,Ventral abdomen,female,7
+9-7,Udder,female,7
+9-8,Left front pastern,female,7

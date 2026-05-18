@@ -1,0 +1,2 @@
+"AUC","AUC_lo","AUC_hi","threshold","sensitivity","specificity","Youden_J","Youden_lo","Youden_hi","PPV","NPV","F1"
+0.999,0.995,1,0.574,0.979,1,0.979,0.939,1,1,0.98,0.989

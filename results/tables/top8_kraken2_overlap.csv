@@ -1,0 +1,9 @@
+"rank","family","source","in_kraken2"
+1,"Deinococcaceae","env-shared",TRUE
+2,"Intrasporangiaceae","animal-only",FALSE
+3,"Dietziaceae","animal-only",FALSE
+4,"UCG-010","animal-only",FALSE
+5,"Brevibacteriaceae","animal-only",TRUE
+6,"Dermabacteraceae","animal-only",FALSE
+7,"Hungateiclostridiaceae","animal-only",FALSE
+8,"Eggerthellaceae","animal-only",FALSE
