@@ -2,8 +2,8 @@
 
 Derived from 7,646 ASVs (QIIME2 / SILVA, V3-V4 amplicon 341F–805R).
 Targets the four top Random Forest predictors distinguishing
-AB_lower_contact (Muzzle + Pastern + Udder + Ventral abdomen)
-from C_elevated (Dorsum + Forehead + Neck + Pectoral area);
+GCtS (Muzzle + Pastern + Udder + Ventral abdomen)
+from EtS (Dorsum + Forehead + Neck + Pectoral area);
 OOB accuracy 97.9%, AUC = 0.999.
 
 ## Probe sequences
@@ -36,7 +36,7 @@ beyond the four-family panel.
 
 | Probe    | Group enrichment  | log2FC (AB/C) | Source       |
 |----------|-------------------|---------------|--------------|
-| DEIN-V3  | **C_elevated**    | −4.30 ***     | env-shared   |
+| DEIN-V3  | **EtS**    | −4.30 ***     | env-shared   |
 | INTR-V3  | **AB_lower**      | +1.56 ***     | animal-only  |
 | HUNG-V3  | **AB_lower**      | +1.96 ***     | animal-only  |
 | CHRI-V3  | **AB_lower**      | +2.40 ***     | env-shared   |

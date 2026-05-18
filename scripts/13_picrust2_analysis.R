@@ -10,7 +10,7 @@ setwd("/home/veve/Dropbox/kone/qiime2")
 # CONFIGURATION — families to examine
 # =========================================================
 
-# Gut-associated families enriched in AB_lower_contact
+# Gut-associated families enriched in GCtS
 gut_families <- c(
   "Lachnospiraceae", "Ruminococcaceae", "Eggerthellaceae",
   "Christensenellaceae", "Hungateiclostridiaceae", "Anaerovoracaceae",
@@ -18,7 +18,7 @@ gut_families <- c(
   "[Eubacterium]_coprostanoligenes_group"
 )
 
-# C_elevated-specific (elevated harness sites; Deinococcaceae top differentiator)
+# EtS-specific (elevated harness sites; Deinococcaceae top differentiator)
 c_specific_families <- c("Deinococcaceae", "Micrococcaceae")
 
 # Top RF predictors (binary AC vs C, ranked by MDA)
@@ -40,15 +40,15 @@ meta <- read.csv("/home/veve/Dropbox/kone/kraken2_reports/metadata.csv",
         filter(topology != "Environment") %>%
         mutate(group2 = case_when(
           topology %in% c("Left front pastern", "Muzzle",
-                          "Ventral abdomen",    "Udder")  ~ "AB_lower_contact",
+                          "Ventral abdomen",    "Udder")  ~ "GCtS",
           topology %in% c("Dorsum", "Forehead", "Neck",
-                          "Pectoral area")                 ~ "C_elevated"
-        ) %>% factor(levels = c("AB_lower_contact", "C_elevated")))
+                          "Pectoral area")                 ~ "EtS"
+        ) %>% factor(levels = c("GCtS", "EtS")))
 
 # PICRUSt2 BIOM sample IDs have _SXX suffix; strip to match metadata
 strip_suffix <- function(x) sub("_S[0-9]+$", "", x)
 
-group2_cols <- c("AB_lower_contact" = "#2ca02c", "C_elevated" = "#d62728")
+group2_cols <- c("GCtS" = "#2ca02c", "EtS" = "#d62728")
 
 # =========================================================
 # LOAD TAXONOMY (ASV → family)
@@ -123,14 +123,14 @@ pw_test <- pw_unstrat %>%
   group_by(feature) %>%
   filter(sum(abundance > 0) >= 4) %>%   # present in at least 4 samples
   summarise(
-    mean_AB = mean(abundance[group2 == "AB_lower_contact"]),
-    mean_C  = mean(abundance[group2 == "C_elevated"]),
+    mean_AB = mean(abundance[group2 == "GCtS"]),
+    mean_C  = mean(abundance[group2 == "EtS"]),
     log2FC  = log2((mean_AB + 1e-6) / (mean_C + 1e-6)),
-    W       = wilcox.test(abundance[group2 == "AB_lower_contact"],
-                          abundance[group2 == "C_elevated"],
+    W       = wilcox.test(abundance[group2 == "GCtS"],
+                          abundance[group2 == "EtS"],
                           exact = FALSE)$statistic,
-    p       = wilcox.test(abundance[group2 == "AB_lower_contact"],
-                          abundance[group2 == "C_elevated"],
+    p       = wilcox.test(abundance[group2 == "GCtS"],
+                          abundance[group2 == "EtS"],
                           exact = FALSE)$p.value,
     .groups = "drop"
   ) %>%
@@ -180,8 +180,8 @@ family_pathway_tbl <- map_dfr(focus_families, function(fam) {
     summarise(mean_abund = mean(abundance), .groups = "drop") %>%
     group_by(feature) %>%
     summarise(
-      mean_AB    = mean_abund[group2 == "AB_lower_contact"],
-      mean_C     = mean_abund[group2 == "C_elevated"],
+      mean_AB    = mean_abund[group2 == "GCtS"],
+      mean_C     = mean_abund[group2 == "EtS"],
       total_mean = mean(mean_abund),
       .groups = "drop"
     ) %>%
@@ -207,11 +207,11 @@ family_pw_test <- map_dfr(focus_families, function(fam) {
     group_by(feature) %>%
     filter(sum(abundance > 0) >= 4) %>%
     summarise(
-      log2FC = log2((mean(abundance[group2 == "AB_lower_contact"]) + 1e-9) /
-                    (mean(abundance[group2 == "C_elevated"]) + 1e-9)),
+      log2FC = log2((mean(abundance[group2 == "GCtS"]) + 1e-9) /
+                    (mean(abundance[group2 == "EtS"]) + 1e-9)),
       p      = tryCatch(
-        wilcox.test(abundance[group2 == "AB_lower_contact"],
-                    abundance[group2 == "C_elevated"],
+        wilcox.test(abundance[group2 == "GCtS"],
+                    abundance[group2 == "EtS"],
                     exact = FALSE)$p.value,
         error = function(e) NA_real_),
       .groups = "drop"
@@ -258,7 +258,7 @@ if (length(top_pw) > 0) {
           axis.text.y  = element_text(size = 7),
           plot.title   = element_text(size = 10, face = "bold"),
           plot.subtitle = element_text(size = 8)) +
-    labs(title    = "Top 20 MetaCyc pathways: AB_lower_contact vs C_elevated",
+    labs(title    = "Top 20 MetaCyc pathways: GCtS vs EtS",
          subtitle = sprintf("Wilcoxon + BH correction | %d sig. pathways total", n_sig),
          x = NULL, y = NULL)
 
@@ -313,7 +313,7 @@ if (length(gut_plots) >= 2) {
   fig_gut <- wrap_plots(gut_plots, ncol = n_col) +
     plot_annotation(
       title = "MetaCyc pathway contributions: gut-associated families (AB enriched)",
-      subtitle = "log2FC > 0 = higher in AB_lower_contact | log2FC < 0 = higher in C_elevated",
+      subtitle = "log2FC > 0 = higher in GCtS | log2FC < 0 = higher in EtS",
       theme = theme(plot.title    = element_text(size = 11, face = "bold"),
                     plot.subtitle = element_text(size = 8))
     )
@@ -331,7 +331,7 @@ c_plots <- compact(c_plots)
 if (length(c_plots) >= 1) {
   fig_c <- wrap_plots(c_plots, ncol = min(2, length(c_plots))) +
     plot_annotation(
-      title = "MetaCyc pathway contributions: C_elevated-specific families",
+      title = "MetaCyc pathway contributions: EtS-specific families",
       theme = theme(plot.title = element_text(size = 11, face = "bold"))
     )
   ggsave("picrust2_C_specific_pathways.pdf", fig_c, width = 10, height = 5)
@@ -456,7 +456,7 @@ cat("Saved picrust2_animal_vs_envshared_pathways.csv\n")
 cat("\n========== PICRUST2 ANALYSIS SUMMARY ==========\n")
 cat(sprintf("Pathways tested (AB vs C): %d | Significant: %d\n",
             nrow(pw_test), n_sig))
-cat(sprintf("AB_lower_contact-enriched: %d | C_elevated-enriched: %d\n",
+cat(sprintf("GCtS-enriched: %d | EtS-enriched: %d\n",
             sum(pw_test$p_adj < 0.05 & pw_test$direction == "AB_higher", na.rm = TRUE),
             sum(pw_test$p_adj < 0.05 & pw_test$direction == "C_higher",  na.rm = TRUE)))
 cat("\nTop 5 AB-enriched pathways:\n")

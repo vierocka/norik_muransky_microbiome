@@ -14,20 +14,20 @@ shorten_fam <- function(x) sub(
 dat <- contrib %>%
   filter(topology != "Environment") %>%
   mutate(topo3 = case_when(
-    topology %in% c("Left front pastern", "Muzzle")   ~ "A_ground_contact",
-    topology %in% c("Ventral abdomen",    "Udder")     ~ "B_near_ground",
+    topology %in% c("Left front pastern", "Muzzle")   ~ "GCtS_A",
+    topology %in% c("Ventral abdomen",    "Udder")     ~ "GCtS_B",
     topology %in% c("Dorsum", "Forehead", "Neck",
-                    "Pectoral area")                    ~ "C_elevated"
-  ) %>% factor(levels = c("A_ground_contact", "B_near_ground", "C_elevated")))
+                    "Pectoral area")                    ~ "EtS"
+  ) %>% factor(levels = c("GCtS_A", "GCtS_B", "EtS")))
 
 X <- dat %>% select(all_of(fam_cols)) %>%
      mutate(across(everything(), as.numeric)) %>%
      rename_with(shorten_fam)
 
 groups    <- levels(dat$topo3)
-topo3_cols <- c("A_ground_contact" = "#2ca02c",
-                "B_near_ground"    = "#17becf",
-                "C_elevated"       = "#d62728")
+topo3_cols <- c("GCtS_A" = "#2ca02c",
+                "GCtS_B"    = "#17becf",
+                "EtS"       = "#d62728")
 
 # =========================================================
 # 1. CONVERGENCE: OOB error vs number of trees
@@ -45,9 +45,9 @@ oob_df <- as.data.frame(rf2k$err.rate) %>%
 for (n in c(100, 250, 500, 750, 1000, 1500, 2000)) {
   cat(sprintf("  ntrees=%4d  OOB=%.3f  A=%.3f  B=%.3f  C=%.3f\n", n,
               rf2k$err.rate[n, "OOB"],
-              rf2k$err.rate[n, "A_ground_contact"],
-              rf2k$err.rate[n, "B_near_ground"],
-              rf2k$err.rate[n, "C_elevated"]))
+              rf2k$err.rate[n, "GCtS_A"],
+              rf2k$err.rate[n, "GCtS_B"],
+              rf2k$err.rate[n, "EtS"]))
 }
 
 p_conv <- ggplot(oob_df, aes(x = trees, y = error * 100, colour = class)) +
@@ -78,9 +78,9 @@ stab <- map_dfr(seeds, function(s) {
   rf_s <- randomForest(x = X, y = dat$topo3, ntree = 1000, importance = FALSE)
   tibble(seed = s,
          OOB   = rf_s$err.rate[1000, "OOB"] * 100,
-         A_err = rf_s$err.rate[1000, "A_ground_contact"] * 100,
-         B_err = rf_s$err.rate[1000, "B_near_ground"]    * 100,
-         C_err = rf_s$err.rate[1000, "C_elevated"]       * 100)
+         A_err = rf_s$err.rate[1000, "GCtS_A"] * 100,
+         B_err = rf_s$err.rate[1000, "GCtS_B"]    * 100,
+         C_err = rf_s$err.rate[1000, "EtS"]       * 100)
 })
 print(stab)
 cat(sprintf("\nOOB mean=%.2f%%  SD=%.2f%%  range=[%.2f%%, %.2f%%]\n",

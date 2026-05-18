@@ -22,11 +22,11 @@ dat <- contrib %>%
 # -------------------------
 dat <- dat %>%
   mutate(topo3 = case_when(
-    topology %in% c("Left front pastern", "Muzzle")        ~ "A_ground_contact",
-    topology %in% c("Ventral abdomen",    "Udder")          ~ "B_near_ground",
+    topology %in% c("Left front pastern", "Muzzle")        ~ "GCtS_A",
+    topology %in% c("Ventral abdomen",    "Udder")          ~ "GCtS_B",
     topology %in% c("Dorsum", "Forehead", "Neck",
-                    "Pectoral area")                         ~ "C_elevated"
-  ) %>% factor(levels = c("A_ground_contact", "B_near_ground", "C_elevated")))
+                    "Pectoral area")                         ~ "EtS"
+  ) %>% factor(levels = c("GCtS_A", "GCtS_B", "EtS")))
 
 cat("=== Topology grouping (reduced) ===\n")
 print(dat %>% distinct(topology, topo3) %>% arrange(topo3))

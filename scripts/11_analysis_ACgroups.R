@@ -34,14 +34,14 @@ dat <- contrib %>%
     richness = rowSums(across(all_of(fam_cols), as.numeric) > 0),
     group2   = case_when(
       topology %in% c("Left front pastern", "Muzzle",
-                      "Ventral abdomen",    "Udder")   ~ "AC_lower_contact",
+                      "Ventral abdomen",    "Udder")   ~ "GCtS",
       topology %in% c("Dorsum", "Forehead", "Neck",
-                      "Pectoral area")                  ~ "C_elevated"
-    ) %>% factor(levels = c("AC_lower_contact", "C_elevated"))
+                      "Pectoral area")                  ~ "EtS"
+    ) %>% factor(levels = c("GCtS", "EtS"))
   ) %>%
   left_join(meta %>% select(sample_id, age), by = "sample_id")
 
-group2_cols <- c("AC_lower_contact" = "#2ca02c", "C_elevated" = "#d62728")
+group2_cols <- c("GCtS" = "#2ca02c", "EtS" = "#d62728")
 topology_cols <- c(
   "Dorsum"             = "#1f77b4", "Forehead"           = "#ff7f0e",
   "Left front pastern" = "#2ca02c", "Muzzle"             = "#9467bd",
@@ -95,8 +95,8 @@ cat("Saved richness_boxplot_onlyACgroups.pdf/.png\n")
 # =========================================================
 cat("\n=== 2. Family abundance: Wilcoxon AC vs C (BH) ===\n")
 famab <- map_dfr(colnames(X), function(f) {
-  ac  <- X[[f]][dat$group2 == "AC_lower_contact"]
-  ce  <- X[[f]][dat$group2 == "C_elevated"]
+  ac  <- X[[f]][dat$group2 == "GCtS"]
+  ce  <- X[[f]][dat$group2 == "EtS"]
   wt  <- wilcox.test(ac, ce, exact=FALSE)
   tibble(family    = f,
          med_AC    = round(median(ac)*100, 4),
@@ -128,8 +128,8 @@ cat("\nConvergence:\n")
 for (n in c(100,250,500,750,1000)) {
   cat(sprintf("  ntrees=%4d  OOB=%.3f  AC=%.3f  C=%.3f\n", n,
               rf$err.rate[n,"OOB"],
-              rf$err.rate[n,"AC_lower_contact"],
-              rf$err.rate[n,"C_elevated"]))
+              rf$err.rate[n,"GCtS"],
+              rf$err.rate[n,"EtS"]))
 }
 
 # Stability across seeds
@@ -137,8 +137,8 @@ stab <- map_dfr(c(1,7,42,99,123,256,314,500,777,999), function(s) {
   set.seed(s)
   rf_s <- randomForest(x=X, y=dat$group2, ntree=1000, importance=FALSE)
   tibble(seed=s, OOB=rf_s$err.rate[1000,"OOB"]*100,
-         AC_err=rf_s$err.rate[1000,"AC_lower_contact"]*100,
-         C_err =rf_s$err.rate[1000,"C_elevated"]*100)
+         AC_err=rf_s$err.rate[1000,"GCtS"]*100,
+         C_err =rf_s$err.rate[1000,"EtS"]*100)
 })
 cat(sprintf("\nStability (10 seeds): OOB mean=%.2f%%  SD=%.2f%%\n",
             mean(stab$OOB), sd(stab$OOB)))
@@ -165,8 +165,8 @@ top4 <- imp$family[1:4]
 # =========================================================
 # 4. ROC CURVE: binary (single clean curve)
 # =========================================================
-probs  <- predict(rf, type="prob")[,"AC_lower_contact"]
-roc_obj <- roc(ifelse(dat$group2=="AC_lower_contact",1,0), probs, quiet=TRUE)
+probs  <- predict(rf, type="prob")[,"GCtS"]
+roc_obj <- roc(ifelse(dat$group2=="GCtS",1,0), probs, quiet=TRUE)
 
 cat(sprintf("\nAUC = %.3f\n", as.numeric(auc(roc_obj))))
 
@@ -194,7 +194,7 @@ J     <- best$sensitivity + best$specificity - 1
 
 set.seed(42)
 n_obs <- length(dat$group2)
-resp_bin <- ifelse(dat$group2=="AC_lower_contact",1,0)
+resp_bin <- ifelse(dat$group2=="GCtS",1,0)
 J_boot <- replicate(2000, {
   idx <- sample(n_obs, n_obs, replace=TRUE)
   r_b <- tryCatch(roc(resp_bin[idx], probs[idx], quiet=TRUE), error=function(e) NULL)
@@ -332,9 +332,9 @@ oob_df <- as.data.frame(rf$err.rate) %>%
 
 p_conv <- ggplot(oob_df, aes(x=trees, y=error*100, colour=class)) +
   geom_line(linewidth=0.6, alpha=0.85) +
-  scale_colour_manual(values=c("OOB"="black","AC_lower_contact"="#2ca02c",
-                                "C_elevated"="#d62728"),
-                      labels=c("OOB"="OOB (overall)","AC_lower_contact"="AC","C_elevated"="C"),
+  scale_colour_manual(values=c("OOB"="black","GCtS"="#2ca02c",
+                                "EtS"="#d62728"),
+                      labels=c("OOB"="OOB (overall)","GCtS"="AC","EtS"="C"),
                       name=NULL) +
   theme_classic(base_size=10) +
   theme(legend.position=c(0.75,0.75), legend.text=element_text(size=8)) +

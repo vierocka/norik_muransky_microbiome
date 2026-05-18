@@ -31,8 +31,8 @@ with Kraken2 (confidence > 33%, min-hit-groups = 5).
 
 | Group | Body sites |
 |---|---|
-| **AB_lower_contact** | Left front pastern, Muzzle, Ventral abdomen, Udder |
-| **C_elevated** | Dorsum, Forehead, Neck, Pectoral area |
+| **GCtS** | Left front pastern, Muzzle, Ventral abdomen, Udder |
+| **EtS** | Dorsum, Forehead, Neck, Pectoral area |
 
 ---
 
@@ -142,8 +142,8 @@ with zero cross-reactivity among the four target families (within-study evaluati
 | HUNG-V3 | *Hungateiclostridiaceae* | `TTACTGGGTGTAAAGGGCGTGT` | 49.7 | 50 | 82% |
 | CHRI-V3 | *Christensenellaceae* | `AGGAAGCCCCGGCTAACTACGT` | 53.4 | 59 | 90% |
 
-DEIN-V3 positive / INTR-V3 HUNG-V3 CHRI-V3 negative → **C_elevated** site.
-Reverse pattern → **AB_lower_contact** site.
+DEIN-V3 positive / INTR-V3 HUNG-V3 CHRI-V3 negative → **EtS** site.
+Reverse pattern → **GCtS** site.
 
 Full derivation details: [`probe_design/diagnostic_probe_set.md`](probe_design/diagnostic_probe_set.md)
 
@@ -181,7 +181,7 @@ EC numbers, KO terms). Probe sequences were designed by MAFFT alignment
 | 16S region | **V3-V4** | V3-V4 | V4 | V4 |
 | Primary driver | Contact zone | Individual | Season | Disease |
 | Age effect | None (5–17 yr) | — | — | — |
-| *Deinococcaceae* | ✓ (C_elevated) | ✓ (back) | ✗ | ✗ |
+| *Deinococcaceae* | ✓ (EtS) | ✓ (back) | ✗ | ✗ |
 | Probe set proposed | ✓ | ✗ | ✗ | ✗ |
 
 *Deinococcaceae* on dorsal/elevated sites is confirmed across two independent

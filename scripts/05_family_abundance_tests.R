@@ -22,13 +22,13 @@ dat_long <- contrib %>%
                       TRUE      ~ "old (>13)") %>%
             factor(levels = c("young (<7)", "mid (7-13)", "old (>13)")),
     topo4 = case_when(
-      topology %in% c("Left front pastern", "Muzzle")     ~ "A_ground_contact",
-      topology %in% c("Ventral abdomen",    "Udder")       ~ "B_near_ground",
+      topology %in% c("Left front pastern", "Muzzle")     ~ "GCtS_A",
+      topology %in% c("Ventral abdomen",    "Udder")       ~ "GCtS_B",
       topology %in% c("Dorsum", "Forehead", "Neck",
-                      "Pectoral area")                      ~ "C_elevated",
+                      "Pectoral area")                      ~ "EtS",
       topology == "Environment"                             ~ "D_environment"
-    ) %>% factor(levels = c("A_ground_contact", "B_near_ground",
-                             "C_elevated", "D_environment")),
+    ) %>% factor(levels = c("GCtS_A", "GCtS_B",
+                             "EtS", "D_environment")),
     topology = factor(topology)
   )
 

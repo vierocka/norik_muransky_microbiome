@@ -108,6 +108,8 @@ Thumbs.db
 /notes.txt
 /*.log
 /*.txt
+/top_predictor_genera.csv
+/top_predictor_genera_notes.md
 
 # Root-level QIIME2 artefacts not needed for reproduction
 /denoising-stats.qza

@@ -22,11 +22,11 @@ shorten_fam <- function(x) sub(
 dat <- contrib %>%
   filter(topology != "Environment") %>%
   mutate(topo3 = case_when(
-    topology %in% c("Left front pastern", "Muzzle")     ~ "A_ground_contact",
-    topology %in% c("Ventral abdomen",    "Udder")       ~ "B_near_ground",
+    topology %in% c("Left front pastern", "Muzzle")     ~ "GCtS_A",
+    topology %in% c("Ventral abdomen",    "Udder")       ~ "GCtS_B",
     topology %in% c("Dorsum", "Forehead", "Neck",
-                    "Pectoral area")                      ~ "C_elevated"
-  ) %>% factor(levels = c("A_ground_contact", "B_near_ground", "C_elevated")))
+                    "Pectoral area")                      ~ "EtS"
+  ) %>% factor(levels = c("GCtS_A", "GCtS_B", "EtS")))
 
 X <- dat %>% select(all_of(fam_cols)) %>%
      mutate(across(everything(), as.numeric)) %>%
@@ -107,10 +107,10 @@ imp_class <- importance(rf, scale = FALSE) %>%
   as.data.frame() %>%
   rownames_to_column("family") %>%
   mutate(source = ifelse(family %in% env_shared, "env-shared", "animal-only")) %>%
-  arrange(desc(A_ground_contact))
+  arrange(desc(GCtS_A))
 
 cat("\n=== Per-class MDA (top 10 per group) ===\n")
-for (grp in c("A_ground_contact", "B_near_ground", "C_elevated")) {
+for (grp in c("GCtS_A", "GCtS_B", "EtS")) {
   cat(sprintf("\n%s:\n", grp))
   print(imp_class %>% arrange(desc(.data[[grp]])) %>%
         select(family, all_of(grp), source) %>% slice_head(n = 10))

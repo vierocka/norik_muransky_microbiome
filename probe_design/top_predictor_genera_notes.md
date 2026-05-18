@@ -1,5 +1,5 @@
 # Genus composition of top RF predictor families
-## AB_lower_contact vs C_elevated binary classification
+## GCtS vs EtS binary classification
 
 Generated from QIIME2/SILVA taxonomy (taxonomy_export/taxonomy.tsv) and
 genus-level count table (genus_export/genus_table.tsv).
@@ -25,7 +25,7 @@ Full data: top_predictor_genera.csv
 
 ## Per-family notes
 
-### Deinococcaceae — RF rank 1, C_elevated enriched, env-shared
+### Deinococcaceae — RF rank 1, EtS enriched, env-shared
 - **1 genus: *Deinococcus* (100% of reads and ASVs)**
 - The family signal is entirely driven by *Deinococcus*.
 - *Deinococcus* is famous for extreme resistance to UV radiation, desiccation,
@@ -36,7 +36,7 @@ Full data: top_predictor_genera.csv
 - Confirmed by Strompfová & Štempelová (2024): highest on equine back (26.5%).
 - **Clean probe target**: DEIN-V3 probe targets *Deinococcus* specifically.
 
-### Intrasporangiaceae — RF rank 2, AB_lower_contact enriched, animal-only
+### Intrasporangiaceae — RF rank 2, GCtS enriched, animal-only
 - **6 genera; 2 dominate: unclassified (51% reads) + *Ornithinimicrobium* (47%)**
 - 98% of reads covered by these two; remaining 4 genera < 2% combined.
 - The "unclassified" fraction at genus level likely represents *Intrasporangium*
@@ -51,7 +51,7 @@ Full data: top_predictor_genera.csv
   cover both the unclassified and *Ornithinimicrobium* fractions; verify by
   BLAST against *Ornithinimicrobium* type strain 16S (NCBI).
 
-### Hungateiclostridiaceae — RF rank 3, AB_lower_contact enriched, animal-only
+### Hungateiclostridiaceae — RF rank 3, GCtS enriched, animal-only
 - **14 genera; signal is distributed but *Fastidiosipila* dominates reads**
 - *Fastidiosipila* (57% reads, only 17% of ASVs): few but highly abundant strains.
 - *Saccharofermentans* (22% reads, 26% ASVs): most diverse genus by ASV count
@@ -65,7 +65,7 @@ Full data: top_predictor_genera.csv
 - **Probe note**: HUNG-V3 was designed to exclude Christensenellaceae; validate
   specifically against *Fastidiosipila* spp. 16S sequences.
 
-### Christensenellaceae — RF rank 4, AB_lower_contact enriched, env-shared
+### Christensenellaceae — RF rank 4, GCtS enriched, env-shared
 - **3 genera; essentially 1 genus: *Christensenellaceae* R-7 group (98% reads)**
 - The R-7 group is the dominant lineage in Christensenellaceae globally — it is
   the most commonly detected clade in human gut microbiome studies and is
@@ -78,7 +78,7 @@ Full data: top_predictor_genera.csv
 - **Probe note**: CHRI-V3 targets *Christensenellaceae* R-7 group specifically;
   specificity vs. Hungateiclostridiaceae confirmed in-study (0% cross-match).
 
-### Eggerthellaceae — RF rank 6, AB_lower_contact enriched, animal-only
+### Eggerthellaceae — RF rank 6, GCtS enriched, animal-only
 - **5 genera; "uncultured" fraction dominates (82% reads, 61% ASVs)**
 - *Enterorhabdus* (12% reads): a cultured genus in this family, found in mammalian
   intestines and occasionally on skin.
@@ -87,7 +87,7 @@ Full data: top_predictor_genera.csv
 - Animal-only: absent from environment swab.
 - Likely gut-origin commensal colonising skin at lower-contact sites.
 
-### UCG-010 — RF rank 7, AB_lower_contact enriched, animal-only
+### UCG-010 — RF rank 7, GCtS enriched, animal-only
 - **1 genus: UCG-010 (100% of reads and ASVs)**
 - UCG-010 (Uncultured Clostridiales Genus) is an entirely uncultured lineage
   in the order Oscillospirales; known from ruminant gut microbiome studies.
@@ -96,7 +96,7 @@ Full data: top_predictor_genera.csv
   colonisation rather than transient contamination.
 - Animal-only and completely gut-associated in published references.
 
-### Micrococcaceae — RF rank 8, C_elevated enriched, env-shared
+### Micrococcaceae — RF rank 8, EtS enriched, env-shared
 - **13 genera; 3 drive 86% of reads**
 - *Micrococcus* (48% reads, 8% ASVs): high per-ASV abundance, few but dominant strains.
 - *Glutamicibacter* (29% reads, 4% ASVs): formerly *Arthrobacter* sp., soil actinomycete.
@@ -108,7 +108,7 @@ Full data: top_predictor_genera.csv
   its enrichment on elevated sites may reflect different skin physiology
   (drier, less occluded microenvironment) compared to lower-contact sites.
 
-### Peptostreptococcales-Tissierellales — RF rank 9, AB_lower_contact enriched, animal-only
+### Peptostreptococcales-Tissierellales — RF rank 9, GCtS enriched, animal-only
 - **18 genera; *Tissierella* dominates (76% reads, 26% ASVs)**
 - *Tissierella* is a strictly anaerobic gut bacterium, found in human/animal intestines
   and occasionally in wound infections.
@@ -119,7 +119,7 @@ Full data: top_predictor_genera.csv
 - Animal-only, anaerobic, gut-associated profile consistent with faecal/soil
   transfer to lower-contact skin sites.
 
-### Dietziaceae — RF rank 10, AB_lower_contact enriched, animal-only
+### Dietziaceae — RF rank 10, GCtS enriched, animal-only
 - **1 genus: *Dietzia* (100% of reads and ASVs)**
 - *Dietzia* is a lipophilic actinomycete closely related to *Rhodococcus*,
   found in soil, marine sediments, and occasionally animal skin.

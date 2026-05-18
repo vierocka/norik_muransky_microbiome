@@ -21,11 +21,11 @@ dat <- contrib %>%
   mutate(topology = factor(topology),
          horse    = sub("-.*", "", sample_id),
          topo3    = case_when(
-           topology %in% c("Left front pastern", "Muzzle")     ~ "A_ground_contact",
-           topology %in% c("Ventral abdomen",    "Udder")       ~ "B_near_ground",
+           topology %in% c("Left front pastern", "Muzzle")     ~ "GCtS_A",
+           topology %in% c("Ventral abdomen",    "Udder")       ~ "GCtS_B",
            topology %in% c("Dorsum", "Forehead", "Neck",
-                           "Pectoral area")                      ~ "C_elevated"
-         ) %>% factor(levels = c("A_ground_contact", "B_near_ground", "C_elevated")))
+                           "Pectoral area")                      ~ "EtS"
+         ) %>% factor(levels = c("GCtS_A", "GCtS_B", "EtS")))
 
 topology_cols <- c(
   "Dorsum"             = "#1f77b4", "Forehead"           = "#ff7f0e",
@@ -34,14 +34,14 @@ topology_cols <- c(
   "Udder"              = "#bcbd22", "Ventral abdomen"    = "#17becf"
 )
 topo3_cols <- c(
-  "A_ground_contact" = "#2ca02c",
-  "B_near_ground"    = "#17becf",
-  "C_elevated"       = "#d62728"
+  "GCtS_A" = "#2ca02c",
+  "GCtS_B"    = "#17becf",
+  "EtS"       = "#d62728"
 )
 topo3_labels <- c(
-  "A_ground_contact" = "A: ground contact\n(Muzzle, Pastern)",
-  "B_near_ground"    = "B: near ground\n(Udder, Ventral abd.)",
-  "C_elevated"       = "C: elevated\n(Dorsum, Forehead,\nNeck, Pectoral)"
+  "GCtS_A" = "GCtS-A: ground contact\n(Muzzle, Pastern)",
+  "GCtS_B" = "GCtS-B: near ground\n(Udder, Ventral abd.)",
+  "EtS"    = "EtS: elevated\n(Dorsum, Forehead,\nNeck, Pectoral)"
 )
 
 # -------------------------

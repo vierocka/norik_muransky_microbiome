@@ -21,11 +21,11 @@ shorten_fam <- function(x) sub(
 dat <- contrib %>%
   filter(topology != "Environment") %>%
   mutate(topo3 = case_when(
-    topology %in% c("Left front pastern", "Muzzle")   ~ "A_ground_contact",
-    topology %in% c("Ventral abdomen",    "Udder")     ~ "B_near_ground",
+    topology %in% c("Left front pastern", "Muzzle")   ~ "GCtS_A",
+    topology %in% c("Ventral abdomen",    "Udder")     ~ "GCtS_B",
     topology %in% c("Dorsum", "Forehead", "Neck",
-                    "Pectoral area")                    ~ "C_elevated"
-  ) %>% factor(levels = c("A_ground_contact", "B_near_ground", "C_elevated")))
+                    "Pectoral area")                    ~ "EtS"
+  ) %>% factor(levels = c("GCtS_A", "GCtS_B", "EtS")))
 
 X <- dat %>% select(all_of(fam_cols)) %>%
      mutate(across(everything(), as.numeric)) %>%
@@ -82,9 +82,9 @@ for (g in groups) {
               g, as.numeric(roc_ls[[g]]$raw$auc), ci[1], ci[3]))
 }
 
-topo3_cols <- c("A_ground_contact" = "#2ca02c",
-                "B_near_ground"    = "#17becf",
-                "C_elevated"       = "#d62728")
+topo3_cols <- c("GCtS_A" = "#2ca02c",
+                "GCtS_B"    = "#17becf",
+                "EtS"       = "#d62728")
 
 p_roc <- ggplot(roc_df, aes(x = 1 - specificity, y = sensitivity, colour = group)) +
   geom_line(linewidth = 1.1) +
