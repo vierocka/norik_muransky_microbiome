@@ -1,0 +1,3 @@
+"panel","families","mean_oob_acc","sd_oob_acc","auc","auc_lo","auc_hi","youden_j","j_lo","j_hi","sens","sens_lo","sens_hi","spec","spec_lo","spec_hi","opt_thr"
+"Panel_A_original","Deinococcaceae; Intrasporangiaceae; Hungateiclostridiaceae; Christensenellaceae",97.7083333333333,0.42089689356342,0.990451388888889,0.969923747276688,1,0.958333333333333,0.907407407407407,1,1,0.959162414965986,1,0.958333333333333,0.911111111111111,1,0.41753759281213
+"Panel_B_generalised","Deinococcaceae; Micrococcaceae; Lachnospiraceae; UCG-010",97.875,0.20619652471058,0.998263888888889,0.993055555555556,1,0.958333333333333,0.929793233082707,1,1,0.938775510204082,1,0.958333333333333,0.937466755319149,1,0.359371614301192

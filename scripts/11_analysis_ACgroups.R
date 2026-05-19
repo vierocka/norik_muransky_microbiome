@@ -5,8 +5,8 @@ library(pROC)
 library(nnet)
 library(patchwork)
 
-# A+B merged into "AC" (lower body / environmental contact)
-# vs C (elevated / harness sites)
+# A+B merged into GCtS (ground-contact topology sites)
+# vs EtS (elevated topology sites)
 # Rationale: A vs B non-significant in Tukey (p=0.588); both overlap in PCA;
 # biologically both share soil/grass environmental exposure.
 
@@ -25,8 +25,8 @@ shorten_fam <- function(x) sub(
 
 # -------------------------
 # Build dataset: 2 groups
-# AC = Muzzle, Pastern, Udder, Ventral abdomen
-# C  = Dorsum, Forehead, Neck, Pectoral area
+# GCtS = Muzzle, Pastern, Udder, Ventral abdomen
+# EtS  = Dorsum, Forehead, Neck, Pectoral area
 # -------------------------
 dat <- contrib %>%
   filter(topology != "Environment") %>%
@@ -57,9 +57,9 @@ X <- dat %>% select(all_of(fam_cols)) %>%
      rename_with(shorten_fam)
 
 # =========================================================
-# 1. RICHNESS: ANOVA + Wilcoxon AC vs C
+# 1. RICHNESS: ANOVA + Wilcoxon GCtS vs EtS
 # =========================================================
-cat("\n=== 1. Richness: AC vs C ===\n")
+cat("\n=== 1. Richness: GCtS vs EtS ===\n")
 wt_rich <- wilcox.test(richness ~ group2, data = dat, exact = FALSE)
 m_rich  <- lm(richness ~ group2, data = dat)
 cat(sprintf("Wilcoxon W=%.0f, p=%.4f\n", wt_rich$statistic, wt_rich$p.value))
@@ -83,7 +83,7 @@ p_rich <- ggplot(dat, aes(x=group2, y=richness, fill=group2)) +
   theme(legend.position="none",
         plot.title=element_text(size=10,face="bold"),
         plot.subtitle=element_text(size=8)) +
-  labs(title="Family richness: lower contact (AC) vs elevated (C)",
+  labs(title="Family richness: ground-contact (GCtS) vs elevated (EtS)",
        subtitle=sprintf("Wilcoxon W=%.0f, p=%.4f", wt_rich$statistic, wt_rich$p.value),
        x=NULL, y="Families present")
 ggsave("richness_boxplot_onlyACgroups.pdf", p_rich, width=5, height=5)
@@ -91,9 +91,9 @@ ggsave("richness_boxplot_onlyACgroups.png", p_rich, width=5, height=5, dpi=300)
 cat("Saved richness_boxplot_onlyACgroups.pdf/.png\n")
 
 # =========================================================
-# 2. FAMILY ABUNDANCE: Wilcoxon per family, AC vs C (BH)
+# 2. FAMILY ABUNDANCE: Wilcoxon per family, GCtS vs EtS (BH)
 # =========================================================
-cat("\n=== 2. Family abundance: Wilcoxon AC vs C (BH) ===\n")
+cat("\n=== 2. Family abundance: Wilcoxon GCtS vs EtS (BH) ===\n")
 famab <- map_dfr(colnames(X), function(f) {
   ac  <- X[[f]][dat$group2 == "GCtS"]
   ce  <- X[[f]][dat$group2 == "EtS"]
@@ -116,9 +116,9 @@ write.csv(famab, "famabund_wilcoxon_ACvsC_onlyACgroups.csv", row.names=FALSE)
 cat("Saved famabund_wilcoxon_ACvsC_onlyACgroups.csv\n")
 
 # =========================================================
-# 3. RANDOM FOREST: binary AC vs C
+# 3. RANDOM FOREST: binary GCtS vs EtS
 # =========================================================
-cat("\n=== 3. Random Forest: AC vs C (1000 trees) ===\n")
+cat("\n=== 3. Random Forest: GCtS vs EtS (1000 trees) ===\n")
 rf <- randomForest(x=X, y=dat$group2, ntree=1000, importance=TRUE)
 cat("OOB confusion matrix:\n"); print(rf$confusion)
 cat(sprintf("OOB error: %.2f%%\n", rf$err.rate[1000,"OOB"]*100))
@@ -126,7 +126,7 @@ cat(sprintf("OOB error: %.2f%%\n", rf$err.rate[1000,"OOB"]*100))
 # Convergence check
 cat("\nConvergence:\n")
 for (n in c(100,250,500,750,1000)) {
-  cat(sprintf("  ntrees=%4d  OOB=%.3f  AC=%.3f  C=%.3f\n", n,
+  cat(sprintf("  ntrees=%4d  OOB=%.3f  GCtS=%.3f  EtS=%.3f\n", n,
               rf$err.rate[n,"OOB"],
               rf$err.rate[n,"GCtS"],
               rf$err.rate[n,"EtS"]))
@@ -137,8 +137,8 @@ stab <- map_dfr(c(1,7,42,99,123,256,314,500,777,999), function(s) {
   set.seed(s)
   rf_s <- randomForest(x=X, y=dat$group2, ntree=1000, importance=FALSE)
   tibble(seed=s, OOB=rf_s$err.rate[1000,"OOB"]*100,
-         AC_err=rf_s$err.rate[1000,"GCtS"]*100,
-         C_err =rf_s$err.rate[1000,"EtS"]*100)
+         GCtS_err=rf_s$err.rate[1000,"GCtS"]*100,
+         EtS_err =rf_s$err.rate[1000,"EtS"]*100)
 })
 cat(sprintf("\nStability (10 seeds): OOB mean=%.2f%%  SD=%.2f%%\n",
             mean(stab$OOB), sd(stab$OOB)))
@@ -250,7 +250,7 @@ p_roc <- ggplot(roc_df, aes(x=1-spec, y=sens)) +
   theme_classic(base_size=11) +
   theme(plot.title=element_text(size=10,face="bold"),
         plot.subtitle=element_text(size=8)) +
-  labs(title="ROC: lower contact (AC) vs elevated (C) - binary RF",
+  labs(title="ROC: ground-contact (GCtS) vs elevated (EtS) - binary RF",
        subtitle=sprintf("AUC=%.3f (95%% CI: %.3f-%.3f) | raw ROC | bootstrap n=2000",
                         as.numeric(auc(roc_obj)), ci_auc[1], ci_auc[3]),
        x="1 - Specificity", y="Sensitivity")
@@ -284,12 +284,12 @@ X8 <- X %>% select(all_of(top8))
 
 p4_ac  <- pca_plot2(X4, as.character(dat$group2), group2_cols,
                     "Contact group",
-                    "PCA top 4 predictors: AC vs C groups",
+                    "PCA top 4 predictors: GCtS vs EtS groups",
                     "pca_top4_ACgroups_onlyACgroups")
 
 p8_ac  <- pca_plot2(X8, as.character(dat$group2), group2_cols,
                     "Contact group",
-                    "PCA top 8 predictors: AC vs C groups",
+                    "PCA top 8 predictors: GCtS vs EtS groups",
                     "pca_top8_ACgroups_onlyACgroups")
 
 p8_site <- pca_plot2(X8, dat$topology, topology_cols,
@@ -315,7 +315,7 @@ p_imp <- ggplot(imp_plot, aes(x=MDA, y=family, fill=source)) +
   theme(legend.position=c(0.68,0.12), legend.text=element_text(size=9),
         plot.title=element_text(size=10,face="bold"),
         plot.subtitle=element_text(size=8)) +
-  labs(title=sprintf("Top 20 family predictors: AC vs C (binary RF)"),
+  labs(title=sprintf("Top 20 family predictors: GCtS vs EtS (binary RF)"),
        subtitle=sprintf("OOB accuracy=%.1f%% | seed stability SD=%.2f%%",
                         (1-rf$err.rate[1000,"OOB"])*100, sd(stab$OOB)),
        x="Mean Decrease Accuracy", y=NULL)
@@ -334,7 +334,7 @@ p_conv <- ggplot(oob_df, aes(x=trees, y=error*100, colour=class)) +
   geom_line(linewidth=0.6, alpha=0.85) +
   scale_colour_manual(values=c("OOB"="black","GCtS"="#2ca02c",
                                 "EtS"="#d62728"),
-                      labels=c("OOB"="OOB (overall)","GCtS"="AC","EtS"="C"),
+                      labels=c("OOB"="OOB (overall)","GCtS"="GCtS","EtS"="EtS"),
                       name=NULL) +
   theme_classic(base_size=10) +
   theme(legend.position=c(0.75,0.75), legend.text=element_text(size=8)) +
@@ -343,11 +343,11 @@ p_conv <- ggplot(oob_df, aes(x=trees, y=error*100, colour=class)) +
 
 p_stab <- stab %>%
   pivot_longer(-seed, names_to="metric", values_to="error") %>%
-  mutate(metric=factor(metric,levels=c("OOB","AC_err","C_err"))) %>%
+  mutate(metric=factor(metric,levels=c("OOB","GCtS_err","EtS_err"))) %>%
   ggplot(aes(x=factor(seed), y=error, colour=metric, group=metric)) +
   geom_line(linewidth=0.7) + geom_point(size=2) +
-  scale_colour_manual(values=c("OOB"="black","AC_err"="#2ca02c","C_err"="#d62728"),
-                      labels=c("OOB (overall)","AC","C"), name=NULL) +
+  scale_colour_manual(values=c("OOB"="black","GCtS_err"="#2ca02c","EtS_err"="#d62728"),
+                      labels=c("OOB (overall)","GCtS","EtS"), name=NULL) +
   theme_classic(base_size=10) +
   theme(legend.position=c(0.75,0.75), legend.text=element_text(size=8)) +
   labs(title=sprintf("RF stability: 10 seeds | SD=%.2f%%", sd(stab$OOB)),
@@ -366,11 +366,11 @@ p_cal <- ggplot(cal_df, aes(x=mean_pred, y=frac_obs)) +
   scale_size_continuous(range=c(2,7), name="n") +
   theme_classic(base_size=10) +
   theme(legend.position=c(0.15,0.75)) +
-  labs(title="Probability calibration (AC vs C)",
-       x="Mean predicted probability", y="Observed fraction AC")
+  labs(title="Probability calibration (GCtS vs EtS)",
+       x="Mean predicted probability", y="Observed fraction GCtS")
 
 fig_diag <- (p_conv | p_stab | p_cal) +
-  plot_annotation(title="RF diagnostics: binary AC vs C classification",
+  plot_annotation(title="RF diagnostics: binary GCtS vs EtS classification",
                   theme=theme(plot.title=element_text(size=11,face="bold")))
 ggsave("rf_diagnostics_onlyACgroups.pdf", fig_diag, width=14, height=5)
 ggsave("rf_diagnostics_onlyACgroups.png", fig_diag, width=14, height=5, dpi=300)
