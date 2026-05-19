@@ -1,0 +1,5 @@
+"noise_pct","mean_acc","sd_acc","top5_predictors"
+0,97.7083333333333,0.957225607784043,"Deinococcaceae | Intrasporangiaceae | Hungateiclostridiaceae | uncultured | Christensenellaceae"
+1,97.8125,0.768609153513149,"Deinococcaceae | Intrasporangiaceae | Hungateiclostridiaceae | Micrococcaceae | Christensenellaceae"
+5,97.7083333333333,0.658807845868412,"Deinococcaceae | Intrasporangiaceae | Hungateiclostridiaceae | uncultured | Christensenellaceae"
+10,98.125,0.821677747652726,"Deinococcaceae | Intrasporangiaceae | Hungateiclostridiaceae | UCG-010 | uncultured"
